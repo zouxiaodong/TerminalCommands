@@ -28,6 +28,7 @@ FileManager::FileManager(const std::string& fileName) {
             this->groupName = grp->gr_name;
         }
         this->filePermissions = buf.st_mode;
+        this->lastAccess = buf.st_atimespec;
     } else {
         std::cout << "Error occurred in stat(), value of -1 returned." << std::endl;
     }
@@ -65,6 +66,10 @@ const char * FileManager::getGroupName() {
 
 mode_t FileManager::getFilePermissions() {
     return this->filePermissions;
+}
+
+timespec FileManager::getLastAccess() {
+    return this->lastAccess;
 }
 
 int FileManager::getErrorNumber() {

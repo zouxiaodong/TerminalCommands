@@ -5,7 +5,7 @@ int main() {
     // Test FileManager
     FileManager fileManager = FileManager("file1.txt");
     fileManager.getFileName();
-    std::cout << fileManager.getFilePermissions() << std::endl;
+    printf("Access time  = %d\n", fileManager.getLastAccess());
 
     return 0;
 }

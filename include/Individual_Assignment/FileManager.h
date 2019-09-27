@@ -11,6 +11,7 @@ private:
     gid_t groupId;
     char *groupName;
     mode_t filePermissions;
+    timespec lastAccess;
     int errorNumber;
 public:
     FileManager(const std::string& fileName);
@@ -22,6 +23,7 @@ public:
     gid_t getGroupId();
     const char *getGroupName();
     mode_t getFilePermissions();
+    timespec getLastAccess();
     int getErrorNumber();
 };
 
