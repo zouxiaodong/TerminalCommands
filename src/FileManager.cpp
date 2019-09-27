@@ -39,6 +39,8 @@ FileManager::FileManager(const std::string& fileName) {
     this->errorNumber = 0;
 }
 
+FileManager::~FileManager() = default;
+
 void FileManager::getFileName() {
     std::cout << this->fileName << std::endl;
 }

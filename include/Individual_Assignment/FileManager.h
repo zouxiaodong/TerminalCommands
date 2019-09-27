@@ -18,6 +18,7 @@ private:
     int errorNumber;
 public:
     FileManager(const std::string& fileName);
+    ~FileManager();
     void getFileName();
     mode_t getFileType();
     off_t getFileSize();
