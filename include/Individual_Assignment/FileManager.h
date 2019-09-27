@@ -13,6 +13,7 @@ private:
     mode_t filePermissions;
     timespec lastAccess;
     timespec lastModification;
+    timespec lastStatusChange;
     int errorNumber;
 public:
     FileManager(const std::string& fileName);
@@ -26,6 +27,7 @@ public:
     mode_t getFilePermissions();
     timespec getLastAccess();
     timespec getLastModification();
+    timespec getLastStatusChange();
     int getErrorNumber();
 };
 

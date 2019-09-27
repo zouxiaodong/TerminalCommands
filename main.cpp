@@ -7,6 +7,7 @@ int main() {
     fileManager.getFileName();
     printf("Access time  = %d\n", fileManager.getLastAccess());
     printf("Modification time  = %d\n", fileManager.getLastModification());
+    printf("Status change time  = %d\n", fileManager.getLastStatusChange());
 
     return 0;
 }
