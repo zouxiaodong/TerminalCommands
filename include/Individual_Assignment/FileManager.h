@@ -4,10 +4,12 @@
 class FileManager {
 private:
     std::string fileName;
+    mode_t fileType;
     int errorNumber;
 public:
     FileManager(const std::string& fileName);
     void getFileName();
+    mode_t getFileType();
     int getErrorNumber();
 };
 

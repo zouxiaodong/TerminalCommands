@@ -3,9 +3,8 @@
 
 int main() {
     // Test FileManager
-    FileManager fileManager = FileManager("North");
+    FileManager fileManager = FileManager("file1.txt");
     fileManager.getFileName();
-    std::cout << fileManager.getErrorNumber() << std::endl;
-
+    printf("st_mode = %o\n", fileManager.getFileType());
     return 0;
 }
