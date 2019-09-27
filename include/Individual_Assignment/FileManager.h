@@ -8,6 +8,8 @@ private:
     off_t fileSize;
     uid_t ownerId;
     char *ownerName;
+    gid_t groupId;
+    char *groupName;
     int errorNumber;
 public:
     FileManager(const std::string& fileName);
@@ -16,6 +18,8 @@ public:
     off_t getFileSize();
     uid_t getOwnerId();
     const char * getOwnerName();
+    gid_t getGroupId();
+    const char *getGroupName();
     int getErrorNumber();
 };
 

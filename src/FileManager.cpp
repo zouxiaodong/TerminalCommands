@@ -4,6 +4,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <pwd.h>
+#include <grp.h>
 
 #include "../include/Individual_Assignment/FileManager.h"
 
@@ -12,6 +13,7 @@ FileManager::FileManager(const std::string& fileName) {
 
     struct stat buf;
     struct passwd *pwd;
+    struct group *grp;
     if (stat(this->fileName.c_str(), &buf) != -1) {
         this->fileType = buf.st_mode;
         this->fileSize = buf.st_size;
@@ -20,6 +22,10 @@ FileManager::FileManager(const std::string& fileName) {
             this->ownerName = pwd->pw_name;
         } else {
             std::cout << "Error occurred in getpwuid(), NULL returned." << std::endl;
+        }
+        this->groupId = buf.st_gid;
+        if ((grp = getgrgid(this->groupId)) != nullptr) {
+            this->groupName = grp->gr_name;
         }
     } else {
         std::cout << "Error occurred in stat(), value of -1 returned." << std::endl;
@@ -46,6 +52,14 @@ uid_t FileManager::getOwnerId() {
 
 const char * FileManager::getOwnerName() {
     return this->ownerName;
+}
+
+gid_t FileManager::getGroupId() {
+    return this->groupId;
+}
+
+const char * FileManager::getGroupName() {
+    return this->groupName;
 }
 
 int FileManager::getErrorNumber() {
