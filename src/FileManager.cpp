@@ -3,6 +3,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#include <pwd.h>
 
 #include "../include/Individual_Assignment/FileManager.h"
 
@@ -10,9 +11,16 @@ FileManager::FileManager(const std::string& fileName) {
     this->fileName = "../test-files/" + fileName;
 
     struct stat buf;
+    struct passwd *pwd;
     if (stat(this->fileName.c_str(), &buf) != -1) {
         this->fileType = buf.st_mode;
         this->fileSize = buf.st_size;
+        this->ownerId = buf.st_uid;
+        if ((pwd = getpwuid(this->ownerId)) != nullptr) {
+            this->ownerName = pwd->pw_name;
+        } else {
+            std::cout << "Error occurred in getpwuid(), NULL returned." << std::endl;
+        }
     } else {
         std::cout << "Error occurred in stat(), value of -1 returned." << std::endl;
     }
@@ -24,14 +32,22 @@ void FileManager::getFileName() {
     std::cout << this->fileName << std::endl;
 }
 
-int FileManager::getErrorNumber() {
-    return this->errorNumber;
-}
-
 mode_t FileManager::getFileType() {
     return this->fileType;
 }
 
 off_t FileManager::getFileSize() {
     return this->fileSize;
+}
+
+uid_t FileManager::getOwnerId() {
+    return this->ownerId;
+}
+
+const char * FileManager::getOwnerName() {
+    return this->ownerName;
+}
+
+int FileManager::getErrorNumber() {
+    return this->errorNumber;
 }
