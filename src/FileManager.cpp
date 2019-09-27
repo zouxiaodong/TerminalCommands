@@ -29,6 +29,7 @@ FileManager::FileManager(const std::string& fileName) {
         }
         this->filePermissions = buf.st_mode;
         this->lastAccess = buf.st_atimespec;
+        this->lastModification = buf.st_mtimespec;
     } else {
         std::cout << "Error occurred in stat(), value of -1 returned." << std::endl;
     }
@@ -70,6 +71,10 @@ mode_t FileManager::getFilePermissions() {
 
 timespec FileManager::getLastAccess() {
     return this->lastAccess;
+}
+
+timespec FileManager::getLastModification() {
+    return this->lastModification;
 }
 
 int FileManager::getErrorNumber() {
