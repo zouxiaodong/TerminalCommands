@@ -12,6 +12,7 @@ FileManager::FileManager(const std::string& fileName) {
     struct stat buf;
     if (stat(this->fileName.c_str(), &buf) != -1) {
         this->fileType = buf.st_mode;
+        this->fileSize = buf.st_size;
     } else {
         std::cout << "Error occurred in stat(), value of -1 returned." << std::endl;
     }
@@ -29,4 +30,8 @@ int FileManager::getErrorNumber() {
 
 mode_t FileManager::getFileType() {
     return this->fileType;
+}
+
+off_t FileManager::getFileSize() {
+    return this->fileSize;
 }

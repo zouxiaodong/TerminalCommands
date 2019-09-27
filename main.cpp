@@ -5,6 +5,7 @@ int main() {
     // Test FileManager
     FileManager fileManager = FileManager("file1.txt");
     fileManager.getFileName();
-    printf("st_mode = %o\n", fileManager.getFileType());
+    std::cout << fileManager.getFileSize() << std::endl;
+
     return 0;
 }
