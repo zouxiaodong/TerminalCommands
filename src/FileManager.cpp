@@ -31,6 +31,7 @@ FileManager::FileManager(const std::string& fileName) {
         this->lastAccess = buf.st_atimespec;
         this->lastModification = buf.st_mtimespec;
         this->lastStatusChange = buf.st_ctimespec;
+        this->blockSize = buf.st_blksize;
     } else {
         std::cout << "Error occurred in stat(), value of -1 returned." << std::endl;
     }
@@ -80,6 +81,10 @@ timespec FileManager::getLastModification() {
 
 timespec FileManager::getLastStatusChange() {
     return this->lastStatusChange;
+}
+
+blksize_t FileManager::getBlockSize() {
+    return this->blockSize;
 }
 
 int FileManager::getErrorNumber() {

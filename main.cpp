@@ -6,8 +6,7 @@ int main() {
     FileManager fileManager = FileManager("file1.txt");
     fileManager.getFileName();
     printf("Access time  = %d\n", fileManager.getLastAccess());
-    printf("Modification time  = %d\n", fileManager.getLastModification());
-    printf("Status change time  = %d\n", fileManager.getLastStatusChange());
+    std::cout << fileManager.getBlockSize() << std::endl;
 
     return 0;
 }

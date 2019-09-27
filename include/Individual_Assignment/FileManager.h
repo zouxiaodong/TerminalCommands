@@ -14,6 +14,7 @@ private:
     timespec lastAccess;
     timespec lastModification;
     timespec lastStatusChange;
+    blksize_t blockSize;
     int errorNumber;
 public:
     FileManager(const std::string& fileName);
@@ -28,6 +29,7 @@ public:
     timespec getLastAccess();
     timespec getLastModification();
     timespec getLastStatusChange();
+    blksize_t getBlockSize();
     int getErrorNumber();
 };
 
