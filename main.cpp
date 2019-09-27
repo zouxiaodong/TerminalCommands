@@ -2,8 +2,10 @@
 #include "include/Individual_Assignment/FileManager.h"
 
 int main() {
-    FileManager fileManager2 = FileManager("North");
-    fileManager2.getFileName();
+    // Test FileManager
+    FileManager fileManager = FileManager("North");
+    fileManager.getFileName();
+    std::cout << fileManager.getErrorNumber() << std::endl;
 
     return 0;
 }
