@@ -10,6 +10,7 @@ private:
     char *ownerName;
     gid_t groupId;
     char *groupName;
+    mode_t filePermissions;
     int errorNumber;
 public:
     FileManager(const std::string& fileName);
@@ -20,6 +21,7 @@ public:
     const char * getOwnerName();
     gid_t getGroupId();
     const char *getGroupName();
+    mode_t getFilePermissions();
     int getErrorNumber();
 };
 

@@ -5,8 +5,7 @@ int main() {
     // Test FileManager
     FileManager fileManager = FileManager("file1.txt");
     fileManager.getFileName();
-    std::cout << fileManager.getGroupId() << std::endl;
-    std::cout << fileManager.getGroupName() << std::endl;
+    std::cout << fileManager.getFilePermissions() << std::endl;
 
     return 0;
 }

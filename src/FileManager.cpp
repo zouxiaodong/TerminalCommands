@@ -27,6 +27,7 @@ FileManager::FileManager(const std::string& fileName) {
         if ((grp = getgrgid(this->groupId)) != nullptr) {
             this->groupName = grp->gr_name;
         }
+        this->filePermissions = buf.st_mode;
     } else {
         std::cout << "Error occurred in stat(), value of -1 returned." << std::endl;
     }
@@ -60,6 +61,10 @@ gid_t FileManager::getGroupId() {
 
 const char * FileManager::getGroupName() {
     return this->groupName;
+}
+
+mode_t FileManager::getFilePermissions() {
+    return this->filePermissions;
 }
 
 int FileManager::getErrorNumber() {
