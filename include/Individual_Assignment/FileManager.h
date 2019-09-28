@@ -19,7 +19,7 @@ private:
 public:
     FileManager(const std::string& fileName);
     ~FileManager();
-    void getFileName();
+    std::string getFileName();
     mode_t getFileType();
     off_t getFileSize();
     uid_t getOwnerId();
@@ -32,6 +32,7 @@ public:
     timespec getLastStatusChange();
     blksize_t getBlockSize();
     int getErrorNumber();
+    int dump(std::ofstream & outFile);
 };
 
 #endif //INDIVIDUAL_ASSIGNMENT_FILEMANAGER_H

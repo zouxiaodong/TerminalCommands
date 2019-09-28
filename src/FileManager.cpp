@@ -5,6 +5,7 @@
 #include <unistd.h>
 #include <pwd.h>
 #include <grp.h>
+#include <fstream>
 
 #include "../include/Individual_Assignment/FileManager.h"
 
@@ -40,8 +41,8 @@ FileManager::FileManager(const std::string& fileName) {
 
 FileManager::~FileManager() = default;
 
-void FileManager::getFileName() {
-    std::cout << this->fileName << std::endl;
+std::string FileManager::getFileName() {
+    return this->fileName;
 }
 
 mode_t FileManager::getFileType() {
@@ -90,4 +91,26 @@ blksize_t FileManager::getBlockSize() {
 
 int FileManager::getErrorNumber() {
     return this->errorNumber;
+}
+
+int FileManager::dump(std::ofstream & outFile) {
+    std::ifstream inFile;
+    inFile.open(this->getFileName());
+
+    if (inFile.fail()) {
+        this->errorNumber = -1;
+        std::cerr << "Error opening file." << std::endl;
+
+        return -1;
+    } else {
+        std::string currentLine;
+        while (std::getline(inFile, currentLine)) {
+            std::cout << currentLine << std::endl;
+            outFile << currentLine << std::endl;
+        }
+        inFile.close();
+        outFile.close();
+
+        return 0;
+    }
 }
