@@ -33,9 +33,8 @@ FileManager::FileManager(const std::string& fileName) {
         this->lastStatusChange = buf.st_ctimespec;
         this->blockSize = buf.st_blksize;
     } else {
-        std::cout << "Error occurred in stat(), value of -1 returned." << std::endl;
+        std::cout << "Error occurred in stat(), value of -1 returned. Check if filename is valid." << std::endl;
     }
-
     this->errorNumber = 0;
 }
 
