@@ -34,6 +34,7 @@ public:
     int getErrorNumber();
     int dump(std::ofstream & outFile);
     void renameFile(std::string& newName);
+    void removeFile();
 };
 
 #endif //INDIVIDUAL_ASSIGNMENT_FILEMANAGER_H

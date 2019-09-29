@@ -125,3 +125,27 @@ void FileManager::renameFile(std::string& newName) {
         this->fileName = newName;
     }
 }
+
+void FileManager::removeFile() {
+    if (unlink(this->fileName.c_str()) == -1) {
+        std::cerr << "Error: File could not be deleted." << std::endl;
+        this->errorNumber = -1;
+        exit(1);
+    } else {
+        std::cout << "File was deleted successfully." << std::endl;
+//        // Reset attributes of this object
+//        this->fileName = nullptr;
+//        this->fileType = 0;
+//        this->fileSize = 0;
+//        this->ownerId = 0;
+//        this->ownerName = nullptr;
+//        this->groupId = 0;
+//        this->groupName = nullptr;
+//        this->filePermissions = 0;
+////        this->lastAccess = 0;
+////        this->lastModification = 0;   // TODO: Figure this out
+////        this->lastStatusChange = 0;
+//        this->blockSize = 0;
+//        this->errorNumber = 0;
+    }
+}
