@@ -33,6 +33,7 @@ public:
     blksize_t getBlockSize();
     int getErrorNumber();
     int dump(std::ofstream & outFile);
+    void renameFile(std::string& newName);
 };
 
 #endif //INDIVIDUAL_ASSIGNMENT_FILEMANAGER_H

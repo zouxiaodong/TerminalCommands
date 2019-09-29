@@ -6,11 +6,12 @@
 #include <pwd.h>
 #include <grp.h>
 #include <fstream>
+#include <cstdio>
 
 #include "../include/Individual_Assignment/FileManager.h"
 
 FileManager::FileManager(const std::string& fileName) {
-    this->fileName = "../test-files/" + fileName;
+    this->fileName = fileName;
 
     struct stat buf;
     struct passwd *pwd;
@@ -112,5 +113,15 @@ int FileManager::dump(std::ofstream & outFile) {
         outFile.close();
 
         return 0;
+    }
+}
+
+void FileManager::renameFile(std::string& newName) {
+    if (rename(this->fileName.c_str(), newName.c_str()) == -1) {
+        std::cerr << "Error: File could not be renamed." << std::endl;
+        this->errorNumber = -1;
+        exit(1);
+    } else {
+        this->fileName = newName;
     }
 }
