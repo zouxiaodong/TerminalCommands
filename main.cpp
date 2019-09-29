@@ -21,24 +21,40 @@ int main() {
 //    std::cout << "File Type:" << std::endl;
 //    std::cout << fileManager1.getFileType() << std::endl;
 //    std::cout << fileManager3.getFileType() << std::endl;
+//    if ((int)fileManager1.getFileType() == (int)fileManager3.getFileType())
+//        std::cout << "File Types are the same";
+//    else
+//        std::cout << "Files types are different" << std::endl;
 //    std::cout << "" << std::endl;
 //
 //    // Test getFileSize()
 //    std::cout << "File Size:" << std::endl;
 //    std::cout << fileManager1.getFileSize() << std::endl;
 //    std::cout << fileManager3.getFileSize() << std::endl;
+//    if ((int)fileManager1.getFileSize() == (int)fileManager3.getFileSize())
+//        std::cout << "Files are the same size" << std::endl;
+//    else
+//        std::cout << "Files are different size" << std::endl;
 //    std::cout << "" << std::endl;
 //
 //    // Test getOwnerId()
 //    std::cout << "Owner ID:" << std::endl;
 //    std::cout << fileManager1.getOwnerId() << std::endl;
 //    std::cout << fileManager3.getOwnerId() << std::endl;
+//    if ((int)fileManager1.getOwnerId() != (int)fileManager3.getOwnerId())
+//        std::cout << "Different" << std::endl;
+//    else
+//        std::cout << "Same" << std::endl;
 //    std::cout << "" << std::endl;
 //
 //    // Test getOwnerName()
 //    std::cout << "Owner Name:" << std::endl;
 //    std::cout << fileManager1.getOwnerName() << std::endl;
 //    std::cout << fileManager3.getOwnerName() << std::endl;
+//    if (strcmp(fileManager1.getOwnerName(), fileManager3.getOwnerName()) == 0)
+//        std::cout << "Same name" << std::endl;
+//    else
+//        std::cout << "Different name" << std::endl;
 //    std::cout << "" << std::endl;
 //
 //    // Test getGroupId()
@@ -61,8 +77,8 @@ int main() {
 //
 //    // Test getLastAccess()
 //    std::cout << "Last Access:" << std::endl;
-//    printf("%d\n", fileManager1.getLastStatusChange());
-//    printf("%d\n", fileManager3.getLastStatusChange());
+//    std::cout << (int)fileManager1.getLastStatusChange().tv_sec << std::endl;
+//    std::cout << (int)fileManager3.getLastStatusChange().tv_sec << std::endl;
 //    std::cout << "" << std::endl;
 //
 //    // Test getLastModification()
@@ -79,8 +95,8 @@ int main() {
 //
 //    // Test getBlockSize()
 //    std::cout << "Block Size:" << std::endl;
-//    std::cout << fileManager1.getBlockSize() << std::endl;
-//    std::cout << fileManager3.getBlockSize() << std::endl;
+//    std::cout << (float)fileManager1.getBlockSize() << std::endl;
+//    std::cout << (float)fileManager3.getBlockSize() << std::endl;
 //    std::cout << "" << std::endl;
 //
 //    // Test getErrorNumber
@@ -103,6 +119,12 @@ int main() {
 
     // Test removeFile()
 //    fileManager4.removeFile();
+
+//    // Test compareFile()
+//    if (fileManager1.compareFile(fileManager1))
+//        std::cout << "Same file object" << std::endl;
+//    else
+//        std::cout << "Different file objects" << std::endl;
 
     return 0;
 }
