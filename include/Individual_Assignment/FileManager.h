@@ -1,6 +1,8 @@
 #ifndef INDIVIDUAL_ASSIGNMENT_FILEMANAGER_H
 #define INDIVIDUAL_ASSIGNMENT_FILEMANAGER_H
 
+#include <vector>
+
 class FileManager {
 private:
     std::string fileName;
@@ -15,6 +17,7 @@ private:
     timespec lastModification;
     timespec lastStatusChange;
     blksize_t blockSize;
+    std::vector<FileManager> children;
     int errorNumber;
 public:
     FileManager(const std::string &fileName);
@@ -44,6 +47,8 @@ public:
     timespec getLastStatusChange();
 
     blksize_t getBlockSize();
+
+    std::vector<FileManager> getChildren();
 
     int getErrorNumber();
 

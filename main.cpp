@@ -129,9 +129,13 @@ int main() {
 
 //    // Test expand()
     int result1 = fileManager1.expand();
-    int result2 = fileManager3.expand();
+//    int result2 = fileManager3.expand();
 //
 //    std::cout << result << std::endl;
+
+    // Test getChildren()
+    std::vector<FileManager> childresult1 = fileManager1.getChildren();
+//    std::vector<FileManager> childresult3 = fileManager3.getChildren();
 
     return 0;
 }

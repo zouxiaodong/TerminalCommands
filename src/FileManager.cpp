@@ -13,7 +13,6 @@
 
 FileManager::FileManager(const std::string &fileName) {
     this->fileName = fileName;
-
     struct stat buf;
     struct passwd *pwd;
     struct group *grp;
@@ -45,57 +44,42 @@ FileManager::FileManager(const std::string &fileName) {
 
 FileManager::~FileManager() = default;
 
-std::string FileManager::getFileName() {
-    return this->fileName;
+std::string FileManager::getFileName() { return this->fileName; }
+
+mode_t FileManager::getFileType() { return this->fileType; }
+
+off_t FileManager::getFileSize() { return this->fileSize; }
+
+uid_t FileManager::getOwnerId() { return this->ownerId; }
+
+const char *FileManager::getOwnerName() { return this->ownerName; }
+
+gid_t FileManager::getGroupId() { return this->groupId; }
+
+const char *FileManager::getGroupName() { return this->groupName; }
+
+mode_t FileManager::getFilePermissions() { return this->filePermissions; }
+
+timespec FileManager::getLastAccess() { return this->lastAccess; }
+
+timespec FileManager::getLastModification() { return this->lastModification; }
+
+timespec FileManager::getLastStatusChange() { return this->lastStatusChange; }
+
+blksize_t FileManager::getBlockSize() { return this->blockSize; }
+
+std::vector<FileManager> FileManager::getChildren() {
+    if (S_ISDIR(this->fileType) == 0) {
+        // This file is not a directory
+        this->errorNumber = (int) ENOTDIR;
+        std::cerr << "Error: This file is not a directory, therefore it has no children.";
+
+        exit(-1);
+    } else
+        return this->children;
 }
 
-mode_t FileManager::getFileType() {
-    return this->fileType;
-}
-
-off_t FileManager::getFileSize() {
-    return this->fileSize;
-}
-
-uid_t FileManager::getOwnerId() {
-    return this->ownerId;
-}
-
-const char *FileManager::getOwnerName() {
-    return this->ownerName;
-}
-
-gid_t FileManager::getGroupId() {
-    return this->groupId;
-}
-
-const char *FileManager::getGroupName() {
-    return this->groupName;
-}
-
-mode_t FileManager::getFilePermissions() {
-    return this->filePermissions;
-}
-
-timespec FileManager::getLastAccess() {
-    return this->lastAccess;
-}
-
-timespec FileManager::getLastModification() {
-    return this->lastModification;
-}
-
-timespec FileManager::getLastStatusChange() {
-    return this->lastStatusChange;
-}
-
-blksize_t FileManager::getBlockSize() {
-    return this->blockSize;
-}
-
-int FileManager::getErrorNumber() {
-    return this->errorNumber;
-}
+int FileManager::getErrorNumber() { return this->errorNumber; }
 
 int FileManager::dump(std::ofstream &outFile) {
     // TODO: Figure out block size part of this function
@@ -207,9 +191,6 @@ bool FileManager::compareFile(FileManager &fileManager) {
 }
 
 int FileManager::expand() {
-    // [X] TODO: Add condition to verify this function operates on directories only
-    // [] TODO: Figure out how to incorporate relative path names when creating new instances of FileManager
-
     if (S_ISDIR(this->fileType) == 0) {
         // Not a directory
         std::cerr << "Error: File is not a directory." << std::endl;
@@ -218,14 +199,15 @@ int FileManager::expand() {
         return this->errorNumber;
     } else {
         // Is a directory
-        DIR *dirp;
-        if ((dirp = opendir(this->fileName.c_str())) != nullptr) {
+        DIR *dir;
+        if ((dir = opendir(this->fileName.c_str())) != nullptr) {
             struct dirent *filep;
-            while ((filep = readdir(dirp)) != nullptr) {
-                std::cout << filep->d_name << std::endl;
-//            FileManager newFileManager = FileManager();
+            while ((filep = readdir(dir)) != nullptr) {
+                FileManager newFileManager = FileManager(this->fileName + filep->d_name);
+                // Append newFileManager to this object's children vector
+                this->children.push_back(newFileManager);
             }
-            closedir(dirp);
+            closedir(dir);
         } else {
             std::cerr << "Directory is not found." << std::endl;
             this->errorNumber = (int) ENOTSUP;
