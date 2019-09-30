@@ -8,7 +8,7 @@ int main() {
     // Create new instance of FileManager
     // File name should be relative to the FileManager.cpp file (i.e. beginning with '../test-files/')
     FileManager fileManager1 = FileManager("../test-files/file1.txt");
-    FileManager fileManager3 = FileManager("../test-files/file3.txt");
+    FileManager fileManager3 = FileManager("../test-files/");
 //    FileManager fileManager4 = FileManager("../test-files/file4.txt");
 
 //    // Test getFileType()
@@ -47,7 +47,7 @@ int main() {
 //        std::cout << "Same" << std::endl;
 //    std::cout << "" << std::endl;
 //
-//    // Test getOwnerName()
+//     Test getOwnerName()
 //    std::cout << "Owner Name:" << std::endl;
 //    std::cout << fileManager1.getOwnerName() << std::endl;
 //    std::cout << fileManager3.getOwnerName() << std::endl;
@@ -62,8 +62,8 @@ int main() {
 //    std::cout << fileManager1.getGroupId() << std::endl;
 //    std::cout << fileManager3.getGroupId() << std::endl;
 //    std::cout << "" << std::endl;
-//
-//    // Test getGroupName()
+
+    // Test getGroupName()
 //    std::cout << "Group Name:" << std::endl;
 //    std::cout << fileManager1.getGroupName() << std::endl;
 //    std::cout << fileManager3.getGroupName() << std::endl;
@@ -78,19 +78,19 @@ int main() {
 //    // Test getLastAccess()
 //    std::cout << "Last Access:" << std::endl;
 //    std::cout << (int)fileManager1.getLastStatusChange().tv_sec << std::endl;
-//    std::cout << (int)fileManager3.getLastStatusChange().tv_sec << std::endl;
+//    std::cout << (int) fileManager3.getLastStatusChange().tv_sec << std::endl;
 //    std::cout << "" << std::endl;
-//
+
 //    // Test getLastModification()
 //    std::cout << "Last Modification:" << std::endl;
 //    printf("%d\n", fileManager1.getLastStatusChange());
-//    printf("%d\n", fileManager3.getLastStatusChange());
+//    printf("%d\n", (int) fileManager3.getLastStatusChange().tv_sec);
 //    std::cout << "" << std::endl;
 //
 //    // Test getLastStatusChange()
 //    std::cout << "Last Status Change:" << std::endl;
 //    printf("%d\n", fileManager1.getLastStatusChange());
-//    printf("%d\n", fileManager3.getLastStatusChange());
+//    printf("%d\n", (int) fileManager3.getLastStatusChange().tv_sec);
 //    std::cout << "" << std::endl;
 //
 //    // Test getBlockSize()
@@ -125,6 +125,13 @@ int main() {
 //        std::cout << "Same file object" << std::endl;
 //    else
 //        std::cout << "Different file objects" << std::endl;
+
+
+//    // Test expand()
+    int result1 = fileManager1.expand();
+    int result2 = fileManager3.expand();
+//
+//    std::cout << result << std::endl;
 
     return 0;
 }

@@ -49,11 +49,13 @@ public:
 
     int dump(std::ofstream &outFile);
 
-    void renameFile(std::string &newName);
+    int renameFile(std::string &newName);
 
-    void removeFile();
+    int removeFile();
 
     bool compareFile(FileManager &fileManager);
+
+    int expand();
 };
 
 #endif //INDIVIDUAL_ASSIGNMENT_FILEMANAGER_H

@@ -7,6 +7,7 @@
 #include <grp.h>
 #include <fstream>
 #include <cstdio>
+#include <dirent.h>
 
 #include "../include/Individual_Assignment/FileManager.h"
 
@@ -37,6 +38,8 @@ FileManager::FileManager(const std::string &fileName) {
     } else {
         std::cout << "Error occurred in stat(), value of -1 returned. Check if filename is valid." << std::endl;
     }
+
+    // TODO: Look into (1) http://www.cplusplus.com/reference/system_error/errc/ and (2) http://www.cplusplus.com/reference/cerrno/errno/
     this->errorNumber = 0;
 }
 
@@ -96,43 +99,58 @@ int FileManager::getErrorNumber() {
 
 int FileManager::dump(std::ofstream &outFile) {
     // TODO: Figure out block size part of this function
-    std::ifstream inFile;
-    inFile.open(this->getFileName());
+    // [X] TODO: Add a condition to check if file is a regular file
+    if (S_ISREG(this->fileType) == 0) {
+        // Not a regular file
+        std::cerr << "Error: File is not a regular file." << std::endl;
+        this->errorNumber = (int) ENOTSUP;
 
-    if (inFile.fail()) {
-        this->errorNumber = -1;
-        std::cerr << "Error opening file." << std::endl;
-
-        return -1;
+        return this->errorNumber;
     } else {
-        std::string currentLine;
-        while (std::getline(inFile, currentLine)) {
-            std::cout << currentLine << std::endl;
-            outFile << currentLine << std::endl;
+        // Regular file
+        std::ifstream inFile;
+        inFile.open(this->getFileName());
+        if (inFile.fail()) {
+            std::cerr << "Error opening file." << std::endl;
+            this->errorNumber = (int) ENOENT;
+
+            return this->errorNumber;
+        } else {
+            std::string currentLine;
+            while (std::getline(inFile, currentLine)) {
+                std::cout << currentLine << std::endl;
+                outFile << currentLine << std::endl;
+            }
+            inFile.close();
+            outFile.close();
+            this->errorNumber = 0;
+
+            return 0;
         }
-        inFile.close();
-        outFile.close();
+    }
+}
+
+int FileManager::renameFile(std::string &newName) {
+    if (rename(this->fileName.c_str(), newName.c_str()) == -1) {
+        std::cerr << "Error: File could not be renamed." << std::endl;
+        this->errorNumber = (int) ENOENT;
+
+        return this->errorNumber;
+    } else {
+        this->fileName = newName;
+        this->errorNumber = 0;
 
         return 0;
     }
 }
 
-void FileManager::renameFile(std::string &newName) {
-    if (rename(this->fileName.c_str(), newName.c_str()) == -1) {
-        std::cerr << "Error: File could not be renamed." << std::endl;
-        this->errorNumber = -1;
-        exit(1);
-    } else {
-        this->fileName = newName;
-    }
-}
-
-void FileManager::removeFile() {
+int FileManager::removeFile() {
     // TODO: Figure out how to reset the lastAccess, lastModification and lastStatusChange attributes
     if (unlink(this->fileName.c_str()) == -1) {
         std::cerr << "Error: File could not be deleted." << std::endl;
-        this->errorNumber = -1;
-        exit(1);
+        this->errorNumber = (int) ENOENT;
+
+        return this->errorNumber;
     } else {
         std::cout << "File was deleted successfully." << std::endl;
         // Reset attributes of this object
@@ -149,6 +167,8 @@ void FileManager::removeFile() {
 //        this->lastStatusChange = 0;
         this->blockSize = 0;
         this->errorNumber = 0;
+
+        return 0;
     }
 }
 
@@ -158,30 +178,62 @@ bool FileManager::compareFile(FileManager &fileManager) {
     // Compare data attributes between the two FileManager objects
     if (fileManager.getFileName() != this->fileName)
         return false;
-    else if ((int)fileManager.getFileType() != (int)this->fileType)
+    else if ((int) fileManager.getFileType() != (int) this->fileType)
         return false;
-    else if ((int)fileManager.getFileSize() != (int)this->fileSize)
+    else if ((int) fileManager.getFileSize() != (int) this->fileSize)
         return false;
-    else if ((int)fileManager.getOwnerId() != (int)fileManager.getOwnerId())
+    else if ((int) fileManager.getOwnerId() != (int) fileManager.getOwnerId())
         return false;
     else if (strcmp(fileManager.getOwnerName(), this->ownerName) != 0)
         return false;
-    else if ((int)fileManager.getGroupId() != (int)this->groupId)
+    else if ((int) fileManager.getGroupId() != (int) this->groupId)
         return false;
     else if (strcmp(fileManager.getGroupName(), this->groupName) != 0)
         return false;
-    else if ((int)fileManager.getFilePermissions() != (int)this->filePermissions)
+    else if ((int) fileManager.getFilePermissions() != (int) this->filePermissions)
         return false;
-    else if ((int)fileManager.getLastAccess().tv_sec != (int)this->lastAccess.tv_sec)
+    else if ((int) fileManager.getLastAccess().tv_sec != (int) this->lastAccess.tv_sec)
         return false;
-    else if (((int)fileManager.getLastModification().tv_sec != (int)this->lastModification.tv_sec))
+    else if (((int) fileManager.getLastModification().tv_sec != (int) this->lastModification.tv_sec))
         return false;
-    else if ((int)fileManager.getLastStatusChange().tv_sec != (int)this->lastStatusChange.tv_sec)
+    else if ((int) fileManager.getLastStatusChange().tv_sec != (int) this->lastStatusChange.tv_sec)
         return false;
-    else if ((int)fileManager.getBlockSize() != (int)this->blockSize)
+    else if ((int) fileManager.getBlockSize() != (int) this->blockSize)
         return false;
     else if (fileManager.getErrorNumber() != this->errorNumber)
         return false;
 
     return true;
+}
+
+int FileManager::expand() {
+    // [X] TODO: Add condition to verify this function operates on directories only
+    // [] TODO: Figure out how to incorporate relative path names when creating new instances of FileManager
+
+    if (S_ISDIR(this->fileType) == 0) {
+        // Not a directory
+        std::cerr << "Error: File is not a directory." << std::endl;
+        this->errorNumber = (int) ENOTDIR;
+
+        return this->errorNumber;
+    } else {
+        // Is a directory
+        DIR *dirp;
+        if ((dirp = opendir(this->fileName.c_str())) != nullptr) {
+            struct dirent *filep;
+            while ((filep = readdir(dirp)) != nullptr) {
+                std::cout << filep->d_name << std::endl;
+//            FileManager newFileManager = FileManager();
+            }
+            closedir(dirp);
+        } else {
+            std::cerr << "Directory is not found." << std::endl;
+            this->errorNumber = (int) ENOTSUP;
+
+            return this->errorNumber;
+        }
+        this->errorNumber = 0;
+
+        return 0;
+    }
 }
