@@ -46,6 +46,8 @@ FileManager::~FileManager() = default;
 
 std::string FileManager::getFileName() { return this->fileName; }
 
+void FileManager::setFileName(std::string &newName) { this->renameFile(newName); }
+
 mode_t FileManager::getFileType() { return this->fileType; }
 
 off_t FileManager::getFileSize() { return this->fileSize; }

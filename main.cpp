@@ -7,7 +7,7 @@ int main() {
 
     // Create new instance of FileManager
     // File name should be relative to the FileManager.cpp file (i.e. beginning with '../test-files/')
-    FileManager fileManager1 = FileManager("../test-files/file1.txt");
+    FileManager fileManager1 = FileManager("../test-files/file1000.txt");
     FileManager fileManager3 = FileManager("../test-files/");
 //    FileManager fileManager4 = FileManager("../test-files/file4.txt");
 
@@ -128,14 +128,20 @@ int main() {
 
 
 //    // Test expand()
-    int result1 = fileManager1.expand();
+//    int result1 = fileManager1.expand();
 //    int result2 = fileManager3.expand();
 //
 //    std::cout << result << std::endl;
 
     // Test getChildren()
-    std::vector<FileManager> childresult1 = fileManager1.getChildren();
+//    std::vector<FileManager> childresult1 = fileManager1.getChildren();
 //    std::vector<FileManager> childresult3 = fileManager3.getChildren();
+
+    // Test setFileName()
+    std::string newName = "../test-files/file1.txt";
+    std::cout << "Old Name: " << fileManager1.getFileName() << std::endl;
+    fileManager1.setFileName(newName);
+    std::cout << "New Name: " << fileManager1.getFileName() << std::endl;
 
     return 0;
 }
