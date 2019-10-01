@@ -1,5 +1,5 @@
 #include <iostream>
-#include "include/Individual_Assignment/FileManager.h"
+#include "FileManager.h"
 #include <fstream>
 
 int main() {
@@ -7,8 +7,8 @@ int main() {
 
     // Create new instance of FileManager
     // File name should be relative to the FileManager.cpp file (i.e. beginning with '../test-files/')
-    FileManager fileManager1 = FileManager("../test-files/file1000.txt");
-    FileManager fileManager3 = FileManager("../test-files/");
+    FileManager fileManager1 = FileManager("test-files/file1.txt");
+//    FileManager fileManager3 = FileManager("../test-files/");
 //    FileManager fileManager4 = FileManager("../test-files/file4.txt");
 
 //    // Test getFileType()
@@ -138,10 +138,10 @@ int main() {
 //    std::vector<FileManager> childresult3 = fileManager3.getChildren();
 
     // Test setFileName()
-    std::string newName = "../test-files/file1.txt";
-    std::cout << "Old Name: " << fileManager1.getFileName() << std::endl;
-    fileManager1.setFileName(newName);
-    std::cout << "New Name: " << fileManager1.getFileName() << std::endl;
+//    std::string newName = "../test-files/file1.txt";
+//    std::cout << "Old Name: " << fileManager1.getFileName() << std::endl;
+//    fileManager1.setFileName(newName);
+//    std::cout << "New Name: " << fileManager1.getFileName() << std::endl;
 
     return 0;
 }

@@ -3,4 +3,4 @@ project(Individual_Assignment)
 
 set(CMAKE_CXX_STANDARD 11)
 
-add_executable(Individual_Assignment main.cpp include/Individual_Assignment/FileManager.h src/FileManager.cpp)
+add_executable(Individual_Assignment main.cpp FileManager.h FileManager.cpp mymv.cpp mycp.cpp myls.cpp mycat.cpp myrm.cpp mydiff.cpp mystat.cpp)

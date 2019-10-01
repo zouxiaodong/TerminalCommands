@@ -9,7 +9,7 @@
 #include <cstdio>
 #include <dirent.h>
 
-#include "../include/Individual_Assignment/FileManager.h"
+#include "FileManager.h"
 
 FileManager::FileManager(const std::string &fileName) {
     this->fileName = fileName;
@@ -35,7 +35,8 @@ FileManager::FileManager(const std::string &fileName) {
         this->lastStatusChange = buf.st_ctimespec;
         this->blockSize = buf.st_blksize;
     } else {
-        std::cout << "Error occurred in stat(), value of -1 returned. Check if filename is valid." << std::endl;
+        std::cerr << "Error: stat() could not process file. Check if '" << this->fileName << "' exists." << std::endl;
+        exit(-1);
     }
 
     // TODO: Look into (1) http://www.cplusplus.com/reference/system_error/errc/ and (2) http://www.cplusplus.com/reference/cerrno/errno/
@@ -85,7 +86,6 @@ int FileManager::getErrorNumber() { return this->errorNumber; }
 
 int FileManager::dump(std::ofstream &outFile) {
     // TODO: Figure out block size part of this function
-    // [X] TODO: Add a condition to check if file is a regular file
     if (S_ISREG(this->fileType) == 0) {
         // Not a regular file
         std::cerr << "Error: File is not a regular file." << std::endl;
