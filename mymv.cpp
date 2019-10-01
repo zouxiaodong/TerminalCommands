@@ -15,12 +15,11 @@ int main(int argc, char *argv[]) {
      *  [] figure out a way to check for the errors mentioned in the project description
      */
     if (argc != 3) {
-        // Error
+        // Terminate program due to incorrect number of args
         std::cerr << "Error: `mymv` command takes 2 arguments." << std::endl;
         std::cerr << "" << std::endl; // ensure next command starts on newline
         exit(-1);
     } else {
-        // Continue with program
         FileManager newFileManager = FileManager(argv[1]);
         // Check if first arg is a directory
         if (S_ISDIR(newFileManager.getFileType()) != 0) {
