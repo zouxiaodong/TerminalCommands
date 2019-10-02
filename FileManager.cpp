@@ -142,20 +142,21 @@ int FileManager::removeFile() {
 
         return this->errorNumber;
     } else {
-        // Reset attributes of this object
-        this->fileName = nullptr;
-        this->fileType = 0;
-        this->fileSize = 0;
-        this->ownerId = 0;
-        this->ownerName = nullptr;
-        this->groupId = 0;
-        this->groupName = nullptr;
-        this->filePermissions = 0;
-//        this->lastAccess = 0;
-//        this->lastModification = 0;
-//        this->lastStatusChange = 0;
-        this->blockSize = 0;
-        this->errorNumber = 0;
+        std::cout << "File deleted." << std::endl;
+//        // Reset attributes of this object
+//        this->fileName = nullptr;
+//        this->fileType = 0;
+//        this->fileSize = 0;
+//        this->ownerId = 0;
+//        this->ownerName = nullptr;
+//        this->groupId = 0;
+//        this->groupName = nullptr;
+//        this->filePermissions = 0;
+////        this->lastAccess = 0;
+////        this->lastModification = 0;
+////        this->lastStatusChange = 0;
+//        this->blockSize = 0;
+//        this->errorNumber = 0;
 
         return 0;
     }

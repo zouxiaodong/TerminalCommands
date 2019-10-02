@@ -9,6 +9,8 @@
 int main(int argc, char* argv[]) {
     /*
      * TODO: implement -l flag
+     * - handle situation where user enters two directories e.g. ls dir1 dir2
+     * - convert file permissions to rwx format
      */
     if (argc > 3) {
         // Invalid number of arguments
@@ -44,6 +46,20 @@ int main(int argc, char* argv[]) {
         }
     } else {
         // -l flag is set
-
+        std::string dirName = argv[2];
+        FileManager fileManager = FileManager(dirName);
+        // Check if fileManager is a directory
+        if (S_ISDIR(fileManager.getFileType()) == 0) {
+            // Not a directory
+            std::cerr << "Error: '" << fileManager.getFileName() << "' is not a directory." << std::endl;
+            std::cerr << "" << std::endl;
+        } else {
+            // Is a directory
+            fileManager.expand();
+            for (int i = 0; i < fileManager.getChildren().size(); ++i) {
+                FileManager currentChild = fileManager.getChildren()[i];
+                std::cout << currentChild.getFileType() << "\t" << currentChild.getOwnerName() << "\t" << currentChild.getGroupName() << "\t" << currentChild.getFileSize() << "\t" << currentChild.getLastModification().tv_sec << "\t" << currentChild.getFileName() << std::endl;
+            }
+        }
     }
 }
