@@ -8,6 +8,7 @@
 #include <fstream>
 #include <cstdio>
 #include <dirent.h>
+#include <string.h>
 
 #include "FileManager.h"
 
@@ -30,9 +31,12 @@ FileManager::FileManager(const std::string &fileName) {
             this->groupName = grp->gr_name;
         }
         this->filePermissions = buf.st_mode;
-        this->lastAccess = buf.st_atimespec;
-        this->lastModification = buf.st_mtimespec;
-        this->lastStatusChange = buf.st_ctimespec;
+//        this->lastAccess = buf.st_atimespec;
+        this->lastAccess = buf.st_atim;
+//        this->lastModification = buf.st_mtimespec;
+        this->lastModification = buf.st_mtim;
+//        this->lastStatusChange = buf.st_ctimespec;
+        this->lastStatusChange = buf.st_ctim;
         this->blockSize = buf.st_blksize;
     } else {
         std::cerr << "Error: stat() could not process file. Check if '" << this->fileName << "' exists." << std::endl;
@@ -132,13 +136,13 @@ int FileManager::renameFile(std::string &newName) {
 
 int FileManager::removeFile() {
     // TODO: Figure out how to reset the lastAccess, lastModification and lastStatusChange attributes
+    // TODO: Segmentation fault when running on rasp pi virtual machine?
     if (unlink(this->fileName.c_str()) == -1) {
         std::cerr << "Error: File could not be deleted." << std::endl;
         this->errorNumber = (int) ENOENT;
 
         return this->errorNumber;
     } else {
-        std::cout << "File was deleted successfully." << std::endl;
         // Reset attributes of this object
         this->fileName = nullptr;
         this->fileType = 0;

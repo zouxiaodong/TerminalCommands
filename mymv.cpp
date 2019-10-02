@@ -30,9 +30,7 @@ int main(int argc, char *argv[]) {
         } else {
             // Command is valid
             std::string newName = argv[2];
-            std::cout << newFileManager.getFileName() << std::endl;
             newFileManager.renameFile(newName);
-            std::cout << newFileManager.getFileName() << std::endl;
         }
     }
 }
