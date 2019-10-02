@@ -28,6 +28,12 @@ int main(int argc, char* argv[]) {
         }
     }
     else if (strcmp(argv[1], "-l") != 0) {
+        // Check if two directories were passed as arguments
+        if (argc == 3) {
+            std::cerr << "Error: Directories can only be listed one at a time." << std::endl;
+            std::cerr << "" << std::endl;
+            exit(-1);
+        }
         // -l flag is not set
         std::string dirName = argv[1];
         FileManager fileManager = FileManager(dirName);
@@ -46,6 +52,19 @@ int main(int argc, char* argv[]) {
         }
     } else {
         // -l flag is set
+        // Check if directory was passed in as parameter
+        if (argc == 2) {
+            // No directory therefore, list current directory
+            std::string cd = "./";
+            FileManager currentDir = FileManager(cd);
+            currentDir.expand();
+            // Iterate through children and print fileName's
+            for (int i = 0; i < currentDir.getChildren().size(); ++i) {
+                FileManager currentChild = currentDir.getChildren()[i];
+                std::cout << currentChild.getFileType() << "\t" << currentChild.getOwnerName() << "\t" << currentChild.getGroupName() << "\t" << currentChild.getFileSize() << "\t" << currentChild.getLastModification().tv_sec << "\t" << currentChild.getFileName() << std::endl;
+            }
+            std::cout << "" << std::endl;
+        }
         std::string dirName = argv[2];
         FileManager fileManager = FileManager(dirName);
         // Check if fileManager is a directory
@@ -60,6 +79,7 @@ int main(int argc, char* argv[]) {
                 FileManager currentChild = fileManager.getChildren()[i];
                 std::cout << currentChild.getFileType() << "\t" << currentChild.getOwnerName() << "\t" << currentChild.getGroupName() << "\t" << currentChild.getFileSize() << "\t" << currentChild.getLastModification().tv_sec << "\t" << currentChild.getFileName() << std::endl;
             }
+            std::cerr << "" << std::endl;
         }
     }
 }
