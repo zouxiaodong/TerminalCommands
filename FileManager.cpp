@@ -108,7 +108,6 @@ int FileManager::dump(std::ofstream &outFile) {
         } else {
             std::string currentLine;
             while (std::getline(inFile, currentLine)) {
-                std::cout << currentLine << std::endl;
                 outFile << currentLine << std::endl;
             }
             inFile.close();
