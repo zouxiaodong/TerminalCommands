@@ -6,15 +6,6 @@
 #include "FileManager.h"
 
 int main(int argc, char* argv[]) {
-    /*
-     * TODO:
-     * - create a new temporary file with dump()
-     * - iterate through line by line and print to terminal
-     * - delete temporary file with removeFile()
-     * =========
-     * - check if argc = 2, throw error otherwise
-     * - check if argv[1] is a valid file and a directory
-     */
     if (argc != 2) {
         std::cerr << "Error: `cat` command takes one argument" << std::endl;
         std::cerr << "" << std::endl;

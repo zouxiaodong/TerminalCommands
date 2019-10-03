@@ -8,9 +8,7 @@
 
 int main(int argc, char* argv[]) {
     /*
-     * TODO: implement -l flag
-     * - handle situation where user enters two directories e.g. ls dir1 dir2
-     * - convert file permissions to rwx format
+     * TODO: convert file permissions to rwx format
      */
     if (argc > 3) {
         // Invalid number of arguments
