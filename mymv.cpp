@@ -1,3 +1,9 @@
+// Created by: Nikolas North
+// Date: October 3, 2019
+/*
+ * Implements the `mymv` terminal command, which moves or renames a given file.
+ */
+
 #include <iostream>
 #include <sys/stat.h>
 #include <string>

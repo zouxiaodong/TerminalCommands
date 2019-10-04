@@ -1,3 +1,10 @@
+// Created by: Nikolas North
+// Date: October 3, 2019
+/*
+ * Implements the `mystat` terminal command, which outputs all the instance variables initialized in the
+ * FileManager object.
+ */
+
 #include <iostream>
 #include <string>
 

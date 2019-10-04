@@ -1,3 +1,9 @@
+// Created by: Nikolas North
+// Date: October 3, 2019
+/*
+ * Implements the `myls [-l]` terminal command, which lists out the contents of a directory.
+ */
+
 #include <iostream>
 #include <string>
 #include <vector>

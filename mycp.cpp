@@ -1,3 +1,9 @@
+// Created by: Nikolas North
+// Date: October 3, 2019
+/*
+ * Implements the `mycp` terminal command, which copies a given file.
+ */
+
 #include <iostream>
 #include <sys/stat.h>
 #include <fstream>

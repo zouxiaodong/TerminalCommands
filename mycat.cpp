@@ -1,3 +1,9 @@
+// Created by: Nikolas North
+// Date: October 3, 2019
+/*
+ * Implements the `mycat` terminal command, which outputs the contents of a file to the terminal.
+ */
+
 #include <iostream>
 #include <string>
 #include <sys/stat.h>

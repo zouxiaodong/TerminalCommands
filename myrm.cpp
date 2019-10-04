@@ -1,3 +1,9 @@
+// Created by: Nikolas North
+// Date: October 3, 2019
+/*
+ * Implements the `myrm` terminal command, which deletes given file(s).
+ */
+
 #include <iostream>
 #include <vector>
 #include <string>

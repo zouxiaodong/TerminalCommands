@@ -26,8 +26,6 @@ public:
 
     std::string getFileName();
 
-    void setFileName(std::string &newName);
-
     mode_t getFileType();
 
     off_t getFileSize();
@@ -53,6 +51,8 @@ public:
     std::vector<FileManager> getChildren();
 
     int getErrorNumber();
+
+    void setFileName(std::string &newName);
 
     int dump(std::ofstream &outFile);
 

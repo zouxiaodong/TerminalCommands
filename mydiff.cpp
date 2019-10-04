@@ -1,3 +1,9 @@
+// Created by: Nikolas North
+// Date: October 3, 2019
+/*
+ * Implements the `mydiff` terminal command, which compares two given files.
+ */
+
 #include <iostream>
 #include <string>
 

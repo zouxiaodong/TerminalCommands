@@ -1,3 +1,9 @@
+// Created by: Nikolas North
+// Date: October 3, 2019
+/*
+ * FileManager takes in a file name and extracts various information about that file, if it is valid.
+ */
+
 #include <iostream>
 #include <string>
 #include <sys/types.h>
@@ -53,84 +59,109 @@ FileManager::FileManager(const std::string &fileName) {
 }
 
 /**
- * FileManager destructor
+ * FileManager destructor.
  */
 FileManager::~FileManager() = default;
 
 /**
+ * getFileName()
+ * Returns this FileManager's file name.
+ *
  * @return std::string fileName
  */
 std::string FileManager::getFileName() { return this->fileName; }
 
 /**
- * @param std::string newName
- */
-void FileManager::setFileName(std::string &newName) { this->renameFile(newName); }
-
-/**
+ * getFileType()
+ * Returns this FileManager's file type.
  *
  * @return mode_t fileType
  */
 mode_t FileManager::getFileType() { return this->fileType; }
 
 /**
+ * getFileSize()
+ * Returns this FileManager's file size.
  *
  * @return off_t fileSize
  */
 off_t FileManager::getFileSize() { return this->fileSize; }
 
 /**
+ * getOwnerId()
+ * Returns this FileManager's owner ID.
  *
  * @return uid_t ownerId
  */
 uid_t FileManager::getOwnerId() { return this->ownerId; }
 
 /**
+ * getOwnerName()
+ * Returns this FileManager's owner name.
  *
  * @return const char ownerName
  */
 const char *FileManager::getOwnerName() { return this->ownerName; }
 
 /**
+ * getGroupId()
+ * Returns this FileManager's group ID.
  *
  * @return gid_t groupId
  */
 gid_t FileManager::getGroupId() { return this->groupId; }
 
 /**
+ * getGroupName()
+ * Returns this FileManager's group name.
  *
  * @return const char groupName
  */
 const char *FileManager::getGroupName() { return this->groupName; }
 
 /**
+ * getFilePermissions()
+ * Returns this FileManager's file permissions.
  *
  * @return mode_t filePermissions
  */
 mode_t FileManager::getFilePermissions() { return this->filePermissions; }
 
 /**
+ * getLastAccess()
+ * Returns this FileManager's last access time.
  *
  * @return timespec lastAccess
  */
 timespec FileManager::getLastAccess() { return this->lastAccess; }
 
 /**
+ * getLastModification()
+ * Returns this FileManager's last modification time.
+ *
  * @return timespec lastModification
  */
 timespec FileManager::getLastModification() { return this->lastModification; }
 
 /**
- * timespec lastStatusChange
+ * getLastStatusChange()
+ * Returns this FileManager's last status change time.
+ *
+ * @return timespec lastStatusChange
  */
 timespec FileManager::getLastStatusChange() { return this->lastStatusChange; }
 
 /**
- * blksize_t blockSize
+ * getBlockSize()
+ * Returns this FileManager's block size.
+ *
+ * @return blksize_t blockSize
  */
 blksize_t FileManager::getBlockSize() { return this->blockSize; }
 
 /**
+ * getChildren()
+ * Returns this FileManager's children.
  *
  * @return std::vector<FileManager> children
  */
@@ -149,12 +180,25 @@ std::vector<FileManager> FileManager::getChildren() {
 }
 
 /**
+ * getErrorNumber()
+ * Returns this FileManager's error number.
  *
  * @return int errorNumber
  */
 int FileManager::getErrorNumber() { return this->errorNumber; }
 
 /**
+ * setFileName()
+ * Renames this FileManger object's file name.
+ *
+ * @param std::string newName
+ */
+void FileManager::setFileName(std::string &newName) { this->renameFile(newName); }
+
+/**
+ * dump()
+ * Takes a file stream as a parameter and dump the contents of the named file to that file stream.
+ *
  * @param std::ofstream outFile
  * @return int
  */
@@ -189,6 +233,9 @@ int FileManager::dump(std::ofstream &outFile) {
 }
 
 /**
+ * renameFile()
+ * Changes the name of the file from its existing name to the new name provided as a parameter to this function.
+ *
  * @param std::string newName
  * @return int
  */
@@ -207,6 +254,9 @@ int FileManager::renameFile(std::string &newName) {
 }
 
 /**
+ * removeFile()
+ * Removes the file from the file system.
+ *
  * @return int
  */
 int FileManager::removeFile() {
@@ -238,6 +288,10 @@ int FileManager::removeFile() {
 }
 
 /**
+ * compareFile()
+ * Takes another one of the file objects as a parameter and will compare the contents of the file object this function
+ * was invoked upon to this other file object.
+ *
  * @param FileManager fileManager
  * @return bool
  */
@@ -273,6 +327,9 @@ bool FileManager::compareFile(FileManager &fileManager) {
 }
 
 /**
+ * expand()
+ * Operates on directories only and is used to fill in the children of the file object this function was invoked upon.
+ *
  * @return int
  */
 int FileManager::expand() {
