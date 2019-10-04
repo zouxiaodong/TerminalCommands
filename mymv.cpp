@@ -5,15 +5,6 @@
 #include "FileManager.h"
 
 int main(int argc, char *argv[]) {
-    /*
-     * TODO:
-     *  - used to move and rename files around
-     *  - use the rename method
-     *  ============
-     *  [] insert a condition checking if the second param passed into the command is already a pre-existing file.
-     *      in this case, the program should terminate because the file already exists.
-     *  [] figure out a way to check for the errors mentioned in the project description
-     */
     if (argc != 3) {
         // Terminate program due to incorrect number of args
         std::cerr << "Error: `mymv` command takes 2 arguments." << std::endl;

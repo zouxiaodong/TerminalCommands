@@ -7,9 +7,6 @@
 #include "FileManager.h"
 
 int main(int argc, char* argv[]) {
-    /*
-     * TODO: convert file permissions to rwx format
-     */
     if (argc > 3) {
         // Invalid number of arguments
         std::cerr << "Error: Invalid number of arguments." << std::endl;

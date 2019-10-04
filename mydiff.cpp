@@ -4,14 +4,6 @@
 #include "FileManager.h"
 
 int main(int argc, char* argv[]) {
-    /*
-     * TODO:
-     * - argc must = 3
-     * - check if argv[1] and argv[2] are valid files
-     * - call compareFile()
-     * - if return value is true print they are the same
-     * - if return values is false print they are different
-     */
     // Check if two arguments were passed into `mydiff`
     if (argc != 3) {
         std::cerr << "Error: `mydiff` takes in two arguments" << std::endl;

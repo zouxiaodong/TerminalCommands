@@ -12,6 +12,10 @@
 
 #include "FileManager.h"
 
+/**
+ * FileManager constructor.
+ * @param std::string fileName
+ */
 FileManager::FileManager(const std::string &fileName) {
     this->fileName = fileName;
     struct stat buf;
@@ -24,57 +28,112 @@ FileManager::FileManager(const std::string &fileName) {
         if ((pwd = getpwuid(this->ownerId)) != nullptr) {
             this->ownerName = pwd->pw_name;
         } else {
-            std::cout << "Error occurred in getpwuid(), NULL returned." << std::endl;
+            std::cout << "Error occurred in getpwuid()." << std::endl;
         }
         this->groupId = buf.st_gid;
         if ((grp = getgrgid(this->groupId)) != nullptr) {
             this->groupName = grp->gr_name;
         }
         this->filePermissions = buf.st_mode;
-//        this->lastAccess = buf.st_atimespec;
+        /*
+         * On UNIX based system run:
+         * this->lastAccess = buf.st_atimespec;
+         * this->lastModification = buf.st_mtimespec;
+         * this->lastStatusChange = buf.st_ctimespec;
+         */
         this->lastAccess = buf.st_atim;
-//        this->lastModification = buf.st_mtimespec;
         this->lastModification = buf.st_mtim;
-//        this->lastStatusChange = buf.st_ctimespec;
         this->lastStatusChange = buf.st_ctim;
         this->blockSize = buf.st_blksize;
     } else {
         std::cerr << "Error: stat() could not process file. Check if '" << this->fileName << "' exists." << std::endl;
         exit(-1);
     }
-
-    // TODO: Look into (1) http://www.cplusplus.com/reference/system_error/errc/ and (2) http://www.cplusplus.com/reference/cerrno/errno/
-    this->errorNumber = 0;
+    this->errorNumber = (int) ENOENT;
 }
 
+/**
+ * FileManager destructor
+ */
 FileManager::~FileManager() = default;
 
+/**
+ * @return std::string fileName
+ */
 std::string FileManager::getFileName() { return this->fileName; }
 
+/**
+ * @param std::string newName
+ */
 void FileManager::setFileName(std::string &newName) { this->renameFile(newName); }
 
+/**
+ *
+ * @return mode_t fileType
+ */
 mode_t FileManager::getFileType() { return this->fileType; }
 
+/**
+ *
+ * @return off_t fileSize
+ */
 off_t FileManager::getFileSize() { return this->fileSize; }
 
+/**
+ *
+ * @return uid_t ownerId
+ */
 uid_t FileManager::getOwnerId() { return this->ownerId; }
 
+/**
+ *
+ * @return const char ownerName
+ */
 const char *FileManager::getOwnerName() { return this->ownerName; }
 
+/**
+ *
+ * @return gid_t groupId
+ */
 gid_t FileManager::getGroupId() { return this->groupId; }
 
+/**
+ *
+ * @return const char groupName
+ */
 const char *FileManager::getGroupName() { return this->groupName; }
 
+/**
+ *
+ * @return mode_t filePermissions
+ */
 mode_t FileManager::getFilePermissions() { return this->filePermissions; }
 
+/**
+ *
+ * @return timespec lastAccess
+ */
 timespec FileManager::getLastAccess() { return this->lastAccess; }
 
+/**
+ * @return timespec lastModification
+ */
 timespec FileManager::getLastModification() { return this->lastModification; }
 
+/**
+ * timespec lastStatusChange
+ */
 timespec FileManager::getLastStatusChange() { return this->lastStatusChange; }
 
+/**
+ * blksize_t blockSize
+ */
 blksize_t FileManager::getBlockSize() { return this->blockSize; }
 
+/**
+ *
+ * @return std::vector<FileManager> children
+ */
 std::vector<FileManager> FileManager::getChildren() {
     if (S_ISDIR(this->fileType) == 0) {
         // This file is not a directory
@@ -82,14 +141,24 @@ std::vector<FileManager> FileManager::getChildren() {
         std::cerr << "Error: This file is not a directory, therefore it has no children.";
 
         exit(-1);
-    } else
+    } else {
+        this->errorNumber = 0;
+
         return this->children;
+    }
 }
 
+/**
+ *
+ * @return int errorNumber
+ */
 int FileManager::getErrorNumber() { return this->errorNumber; }
 
+/**
+ * @param std::ofstream outFile
+ * @return int
+ */
 int FileManager::dump(std::ofstream &outFile) {
-    // TODO: Figure out block size part of this function
     if (S_ISREG(this->fileType) == 0) {
         // Not a regular file
         std::cerr << "Error: File is not a regular file." << std::endl;
@@ -114,11 +183,15 @@ int FileManager::dump(std::ofstream &outFile) {
             outFile.close();
             this->errorNumber = 0;
 
-            return 0;
+            return this->errorNumber;
         }
     }
 }
 
+/**
+ * @param std::string newName
+ * @return int
+ */
 int FileManager::renameFile(std::string &newName) {
     if (rename(this->fileName.c_str(), newName.c_str()) == -1) {
         std::cerr << "Error: File could not be renamed." << std::endl;
@@ -129,43 +202,46 @@ int FileManager::renameFile(std::string &newName) {
         this->fileName = newName;
         this->errorNumber = 0;
 
-        return 0;
+        return this->errorNumber;
     }
 }
 
+/**
+ * @return int
+ */
 int FileManager::removeFile() {
-    // TODO: Figure out how to reset the lastAccess, lastModification and lastStatusChange attributes
-    // TODO: Segmentation fault when running on rasp pi virtual machine?
+    std::cout << this->fileName << std::endl;
     if (unlink(this->fileName.c_str()) == -1) {
         std::cerr << "Error: File could not be deleted." << std::endl;
         this->errorNumber = (int) ENOENT;
 
         return this->errorNumber;
     } else {
-        std::cout << "File deleted." << std::endl;
 //        // Reset attributes of this object
 //        this->fileName = nullptr;
-//        this->fileType = 0;
-//        this->fileSize = 0;
-//        this->ownerId = 0;
+        this->fileType = 0;
+        this->fileSize = 0;
+        this->ownerId = 0;
 //        this->ownerName = nullptr;
-//        this->groupId = 0;
+        this->groupId = 0;
 //        this->groupName = nullptr;
-//        this->filePermissions = 0;
-////        this->lastAccess = 0;
-////        this->lastModification = 0;
-////        this->lastStatusChange = 0;
-//        this->blockSize = 0;
-//        this->errorNumber = 0;
+        this->filePermissions = 0;
+//        this->lastAccess = 0;
+//        this->lastModification = 0;
+//        this->lastStatusChange = 0;
+        this->blockSize = 0;
+        this->errorNumber = 0;
+        this->errorNumber = 0;
 
-        return 0;
+        return this->errorNumber;
     }
 }
 
+/**
+ * @param FileManager fileManager
+ * @return bool
+ */
 bool FileManager::compareFile(FileManager &fileManager) {
-    // TODO: Figure out error part of this function
-    // TODO: Figure out block size part of this function
-    // Compare data attributes between the two FileManager objects
     if (fileManager.getFileName() != this->fileName)
         return false;
     else if ((int) fileManager.getFileType() != (int) this->fileType)
@@ -196,6 +272,9 @@ bool FileManager::compareFile(FileManager &fileManager) {
     return true;
 }
 
+/**
+ * @return int
+ */
 int FileManager::expand() {
     if (S_ISDIR(this->fileType) == 0) {
         // Not a directory
@@ -222,6 +301,6 @@ int FileManager::expand() {
         }
         this->errorNumber = 0;
 
-        return 0;
+        return this->errorNumber;
     }
 }

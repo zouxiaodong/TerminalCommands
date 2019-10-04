@@ -4,12 +4,6 @@
 #include "FileManager.h"
 
 int main(int argc, char* argv[]) {
-    /*
-     * TODO:
-     * - check if argc = 2
-     * - create a new instance of FileManager
-     * - print out all the attributes of that instance to the terminal in a readable format (line by line?)
-     */
     if (argc != 2) {
         std::cerr << "Error: `mystat` takes one argument." << std::endl;
         std::cerr << "" << std::endl;
