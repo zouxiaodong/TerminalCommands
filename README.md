@@ -24,7 +24,7 @@
 > ./mycp fileSource fileDest
 ```
 
-##### `myls`
+##### `myls [-l]`
 ```
 > g++ myls.cpp FileManager.cpp -o myls
 > ./myls dirName
