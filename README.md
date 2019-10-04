@@ -2,7 +2,13 @@
 
 ### How to run each command
 
+**Note: When entering directories into the command line, ensure the directory name ends with a slash `/`**
+```
+> ./myls test-files/
+```
+
 ##### `mymv`
+- Used to move and rename files
 ```
 > g++ mymv.cpp FileManager.cpp -o mymv
 > ./mymv fileSource fileDest
