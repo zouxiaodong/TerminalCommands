@@ -53,9 +53,10 @@ FileManager::FileManager(const std::string &fileName) {
         this->blockSize = buf.st_blksize;
     } else {
         std::cerr << "Error: stat() could not process file. Check if '" << this->fileName << "' exists." << std::endl;
+        this->errorNumber = (int) ENOENT;
         exit(-1);
     }
-    this->errorNumber = (int) ENOENT;
+    this->errorNumber = 0;
 }
 
 /**
