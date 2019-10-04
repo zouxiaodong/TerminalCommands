@@ -2,13 +2,17 @@
 
 ### How to run each command
 
-**Note: When entering directories into the command line, ensure the directory name ends with a slash `/`**
+**When entering directories into the command line, ensure the directory name ends with a forward slash `/`**
 ```
 > ./myls test-files/
 ```
 
+**Always use relative path names for files when passing them as arguments**
+```
+
+```
+
 ##### `mymv`
-- Used to move and rename files
 ```
 > g++ mymv.cpp FileManager.cpp -o mymv
 > ./mymv fileSource fileDest
@@ -23,30 +27,30 @@
 ##### `myls`
 ```
 > g++ myls.cpp FileManager.cpp -o myls
-> ./myls
+> ./myls dirName
 ```
 
 ##### `mycat`
 ```
 > g++ mycat.cpp FileManager.cpp -o mycat
-> ./mycat
+> ./mycat fileName
 ```
 
 ##### `myrm`
 ```
 > g++ myrm.cpp FileManager.cpp -o myrm
-> ./myrm
+> ./myrm fileName
 ```
 ##### `mydiff`
 ```
 > g++ mydiff.cpp FileManager.cpp -o mydiff
-> ./mydiff
+> ./mydiff fileName1 fileName2
 ```
 
 ##### `mystat`
 ```
 > g++ mystat.cpp FileManager.cpp
-> ./mystat
+> ./mystat fileName
 ```
 
 
