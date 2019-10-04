@@ -204,6 +204,7 @@ void FileManager::setFileName(std::string &newName) { this->renameFile(newName);
  * @return int
  */
 int FileManager::dump(std::ofstream &outFile) {
+    // Check if this file type is regular
     if (S_ISREG(this->fileType) == 0) {
         // Not a regular file
         std::cerr << "Error: File is not a regular file." << std::endl;
@@ -220,6 +221,7 @@ int FileManager::dump(std::ofstream &outFile) {
 
             return this->errorNumber;
         } else {
+            // Copy this file's content to outFile
             std::string currentLine;
             while (std::getline(inFile, currentLine)) {
                 outFile << currentLine << std::endl;

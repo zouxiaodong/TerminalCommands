@@ -14,6 +14,7 @@ int main(int argc, char* argv[]) {
     if (argc != 3) {
         std::cerr << "Error: `mydiff` takes in two arguments" << std::endl;
         std::cerr << "" << std::endl;
+
         exit(-1);
     } else {
         std::string file1 = argv[1];
